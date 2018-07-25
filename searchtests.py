@@ -49,6 +49,21 @@ class SearchTests(unittest.TestCase):
         print (message.text)
         self.assertEqual("YOUR SEARCH YIELDED NO RESULTS", message.text)
 
+    def test_search_car(self):
+        driver = self.driver
+        search_field_icon = driver.find_element_by_class_name("fa.fa-search")
+        search_field_icon.click()
+        search_field = driver.find_element_by_class_name("search-query.form-text")
+        search_field.clear()
+        search_field.send_keys("car")
+        search_button = driver.find_element_by_class_name("mage-btn.btn.btn-default")
+        search_button.click()
+        products = driver.find_elements_by_class_name("result-title")
+        print("Found ", str(len(products)), " products:")
+        for product in products:
+            print(product.text)
+        self.assertEqual(10, len(products))
+
     @classmethod
     def tearDownClass(cls):
         cls.driver.quit()

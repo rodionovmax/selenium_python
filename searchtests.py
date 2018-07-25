@@ -35,15 +35,15 @@ class SearchTests(unittest.TestCase):
 
     def test_search_by_name(self):
         driver = self.driver
+        search_field_icon = driver.find_element_by_css_selector(".fa-search")
+        search_field_icon.click()
         search_field = driver.find_element_by_css_selector(".search-query")
         search_field.clear()
         search_field.send_keys("camry")
         search_field.submit()
-        products = driver.find_elements_by_class_name("result-url")
-        print ("Found ", str(len(products)), " products:")
-        for product in products:
-            print(product.text)
-        self.assertEqual(10, len(products))
+        message = driver.find_element_by_css_selector(".span9 > h2:nth-child(1)")
+        print (message.text)
+        self.assertEqual("YOUR SEARCH YIELDED NO RESULTS", message.text)
 
     def tearDown(self):
         self.driver.quit()

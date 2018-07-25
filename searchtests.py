@@ -4,10 +4,14 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
 class SearchTests(unittest.TestCase):
-    def setUp(self):
-        self.driver = webdriver.Firefox()
-        self.driver.implicitly_wait(30)
-        self.driver.get("http://demo.magentocommerce.com/")
+    @classmethod
+    def setUpClass(cls):
+        #create a new Firefox session
+        cls.driver = webdriver.Firefox()
+        cls.driver.implicitly_wait(30)
+        #navigate to application home page
+        cls.driver.get("http://demo.magentocommerce.com/")
+        cls.driver.title
 
     def test_search_phones(self):
         driver = self.driver
@@ -45,8 +49,9 @@ class SearchTests(unittest.TestCase):
         print (message.text)
         self.assertEqual("YOUR SEARCH YIELDED NO RESULTS", message.text)
 
-    def tearDown(self):
-        self.driver.quit()
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
 
 if __name__ == '__main__':
         unittest.main()
